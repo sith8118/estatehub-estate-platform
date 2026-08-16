@@ -19,6 +19,24 @@ A microservices-based real estate management system developed using Spring Boot.
 - Booking Service
 - Payment Service
 
+## How to Run the Application using Docker Compose
+
+You can boot up the entire microservices ecosystem, along with the MySQL database, using a single command:
+
+```bash
+docker compose up --build -d
+```
+
+This will construct and start all containers mapped to the `estatehub-network`.
+
+### Service Access & Documentation
+- **API Gateway**: `http://localhost:8080` (Routes all microservice traffic)
+- **Auth Service**: `http://localhost:8081`
+- **Property Service (Swagger UI)**: `http://localhost:8082/swagger-ui.html`
+- **Agent Service (Swagger UI)**: `http://localhost:8083/swagger-ui.html`
+- **Booking Service (Swagger UI)**: `http://localhost:8084/swagger-ui.html`
+- **Payment Service (Swagger UI)**: `http://localhost:8085/swagger-ui.html`
+
 ## Member 1 – API Gateway and Authentication Service
 
 **Index Number:** ITBIN-2313-0049

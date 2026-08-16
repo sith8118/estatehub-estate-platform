@@ -2,57 +2,119 @@ version: '3.8'
 
 services:
   mysql-db:
-    image: mysql:8.4
-    container_name: mysql-db
-    environment:
-      MYSQL_ROOT_PASSWORD: Sith#123
-      MYSQL_DATABASE: estatehub_auth
+    image: mysql:8.0
+    container_name: estatehub-mysql
+    restart: always
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: estatehub_db
     volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - estatehub-network
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pSith#123"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - estatehub-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    container_name: estatehub-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+      - property-service
+      - agent-service
+      - booking-service
+      - payment-service
+    networks:
+      - estatehub-network
 
   auth-service:
-    build: ./auth-service
-    container_name: auth-service
+    build:
+      context: ./auth-service
+    container_name: estatehub-auth-service
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/estatehub_auth?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=Sith#123
-      - APP_API-KEY=ESTATEHUB_SECRET_KEY
-      - JWT_SECRET=9a67475c74263385750d0322c349ef2c4cf27e4e892d19213192031a02bb4e16
-      - JWT_EXPIRATION=86400000
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql-db
     depends_on:
       mysql-db:
         condition: service_healthy
     networks:
       - estatehub-network
 
-  api-gateway:
-    build: ./api-gateway
-    container_name: api-gateway
+  property-service:
+    build:
+      context: ./property-service
+    container_name: estatehub-property-service
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
-      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://auth-service:8081
-      - JWT_SECRET=9a67475c74263385750d0322c349ef2c4cf27e4e892d19213192031a02bb4e16
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql-db
     depends_on:
-      - auth-service
+      mysql-db:
+        condition: service_healthy
     networks:
       - estatehub-network
 
-volumes:
-  mysql-data:
+  agent-service:
+    build:
+      context: ./agent-service
+    container_name: estatehub-agent-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql-db
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - estatehub-network
+
+  booking-service:
+    build:
+      context: ./booking-service
+    container_name: estatehub-booking-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql-db
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - estatehub-network
+
+  payment-service:
+    build:
+      context: ./payment-service
+    container_name: estatehub-payment-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql-db
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - estatehub-network
 
 networks:
   estatehub-network:
     driver: bridge
+
+volumes:
+  mysql_data:
