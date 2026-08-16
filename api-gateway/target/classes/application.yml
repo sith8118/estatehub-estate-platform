@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
+        - id: property-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/properties/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
+        - id: agent-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/agents/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
+        - id: booking-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/bookings/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
+        - id: payment-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/payments/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
+
+server:
+  port: 8080
+
+jwt:
+  secret: 9a67475c74263385750d0322c349ef2c4cf27e4e892d19213192031a02bb4e16
