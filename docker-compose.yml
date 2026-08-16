@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.4
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: Sith#123
+      MYSQL_DATABASE: estatehub_auth
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - estatehub-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pSith#123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/estatehub_auth?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Sith#123
+      - APP_API-KEY=ESTATEHUB_SECRET_KEY
+      - JWT_SECRET=9a67475c74263385750d0322c349ef2c4cf27e4e892d19213192031a02bb4e16
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - estatehub-network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://auth-service:8081
+      - JWT_SECRET=9a67475c74263385750d0322c349ef2c4cf27e4e892d19213192031a02bb4e16
+    depends_on:
+      - auth-service
+    networks:
+      - estatehub-network
+
+volumes:
+  mysql-data:
+
+networks:
+  estatehub-network:
+    driver: bridge
