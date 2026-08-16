@@ -50,6 +50,6 @@ public class NotificationLog {
     }
 
     public enum NotificationStatus {
-        SENT, FAILED
+        PENDING, SENT, FAILED
     }
 }
