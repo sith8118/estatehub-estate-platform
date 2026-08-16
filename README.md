@@ -19,7 +19,7 @@ A microservices-based real estate management system developed using Spring Boot.
 - Booking Service
 - Payment Service
 
-## Member 1– Authentication Service
+## Member 1– API Gateway and Authentication Service
 
 **Index Number:** ITBIN-2313-0049
 
