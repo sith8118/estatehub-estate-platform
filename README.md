@@ -8,7 +8,7 @@ A microservices-based real estate management system developed using Spring Boot.
 - Member 2 – 
 - Member 3 – 
 - Member 4 – 
-- Member 5 – 
+- Member 5 – Payment and Notification Service
 
 ## Microservices
 
@@ -19,7 +19,7 @@ A microservices-based real estate management system developed using Spring Boot.
 - Booking Service
 - Payment Service
 
-## Member 1– API Gateway and Authentication Service
+## Member 1 – API Gateway and Authentication Service
 
 **Index Number:** ITBIN-2313-0049
 
@@ -33,37 +33,6 @@ A microservices-based real estate management system developed using Spring Boot.
 - Added DTOs for authentication requests.
 - Integrated Spring Data JPA for database access.
 - Configured MySQL database connectivity.
-- Structured the service using Controller, Service, Repository, DTO, and Model layers.
-
-### Authentication API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/auth/register` | Register a new user |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- MySQL
-- Maven
-- Lombok
-
-## Member 1 – Authentication Service
-
-**Index Number:** ITBIN-2313-0049
-
-### Responsibilities
-- Developed the Authentication Microservice using Spring Boot.
-- Implemented user registration functionality.
-- Created the User entity and JPA repository.
-- Implemented authentication service layer.
-- Created REST API endpoints for authentication.
-- Integrated MySQL database support.
-- Added request DTOs for authentication.
 - Structured the service using Controller, Service, Repository, DTO, and Model layers.
 
 ### Authentication API
@@ -98,3 +67,56 @@ auth-service/
 │   └── UserRepository.java
 └── service/
     └── AuthService.java
+```
+
+## Member 5 – Payment and Notification Service
+
+**Index Number:** [Your Index Number]
+
+### Responsibilities
+
+- Developed the Payment Microservice using Spring Boot.
+- Implemented transactional payment processing.
+- Generated dynamic payment invoices using OpenPDF.
+- Implemented mock email and SMS notification dispatching.
+- Secured service endpoints via custom API Key authentication.
+- Configured multi-stage Dockerfile for containerized deployment.
+- Structured the service using Controller, Service, Repository, DTO, and Security layers.
+
+### Payment API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/payments/process` | Process a payment and generate invoice |
+
+### Technologies Used
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- MySQL / H2
+- OpenPDF
+- JavaMailSender
+- OpenAPI/Swagger
+- Lombok
+- Docker
+
+### Project Structure
+
+```text
+payment-service/
+├── controller/
+│   └── PaymentController.java
+├── dto/
+│   ├── PaymentRequest.java
+│   └── PaymentResponse.java
+├── model/
+│   └── PaymentTransaction.java
+├── repository/
+│   └── PaymentRepository.java
+├── security/
+│   └── ApiKeyAuthFilter.java
+└── service/
+    ├── PaymentService.java
+    └── NotificationService.java
+```
