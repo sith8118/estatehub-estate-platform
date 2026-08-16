@@ -5,7 +5,7 @@ A microservices-based real estate management system developed using Spring Boot.
 ## Team Members
 
 - Member 1 – API Gateway and Authentication Service
-- Member 2 – 
+- Member 2 – Property Service
 - Member 3 – 
 - Member 4 – 
 - Member 5 – Payment and Notification Service
@@ -67,6 +67,69 @@ auth-service/
 │   └── UserRepository.java
 └── service/
     └── AuthService.java
+```
+
+## Member 2 – Property Service
+
+**Index Number:** [Your Index Number]
+
+### Responsibilities
+
+- Developed the Property Microservice using Spring Boot.
+- Implemented real estate property management (CRUD).
+- Engineered advanced search filtering logic using Spring Data JPA.
+- Secured service endpoints via custom API Key authentication (`X-API-KEY`).
+- Configured multi-stage Dockerfile for containerized deployment.
+- Documented API endpoints via OpenAPI (Swagger).
+- Structured the service using Controller, Service, Repository, DTO, and Security layers.
+
+### Property API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/properties` | Create a new property listing |
+| GET | `/api/v1/properties` | Retrieve all properties |
+| GET | `/api/v1/properties/{id}` | Retrieve property by ID |
+| PUT | `/api/v1/properties/{id}` | Update an existing property |
+| DELETE | `/api/v1/properties/{id}` | Delete a property |
+| GET | `/api/v1/properties/search` | Search properties by location, price, type, and bedrooms |
+
+### Technologies Used
+
+- Java 17
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- MySQL / H2
+- OpenAPI/Swagger
+- Lombok
+- Docker
+
+### Project Structure
+
+```text
+property-service/
+├── config/
+│   ├── OpenApiConfig.java
+│   └── SecurityConfig.java
+├── controller/
+│   ├── GlobalExceptionHandler.java
+│   └── PropertyController.java
+├── dto/
+│   ├── ErrorResponse.java
+│   ├── PropertyRequest.java
+│   └── PropertyResponse.java
+├── model/
+│   └── Property.java
+├── repository/
+│   └── PropertyRepository.java
+├── security/
+│   ├── ApiKeyAuthFilter.java
+│   └── ApiKeyAuthenticationToken.java
+└── service/
+    ├── PropertyService.java
+    └── PropertyServiceImpl.java
 ```
 
 ## Member 5 – Payment and Notification Service
