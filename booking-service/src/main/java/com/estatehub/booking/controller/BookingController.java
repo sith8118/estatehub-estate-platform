@@ -29,7 +29,10 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    @Operation(summary = "Create a new booking", description = "Creates a new property viewing booking")
+    @Operation(
+    summary = "Delete a booking",
+    description = "Deletes an existing booking record by its unique identifier"
+)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Booking created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid request arguments",
@@ -41,7 +44,11 @@ public class BookingController {
         return new ResponseEntity<>(bookingService.createBooking(request), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Get all bookings", description = "Retrieves a list of all bookings")
+    @Operation(
+    summary = "Get all bookings",
+    description = "Retrieves a complete list of booking records"
+)
+@ApiResponse(responseCode = "200", description = "Bookings retrieved successfully")
     @GetMapping
     public ResponseEntity<List<BookingResponse>> getAllBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());
