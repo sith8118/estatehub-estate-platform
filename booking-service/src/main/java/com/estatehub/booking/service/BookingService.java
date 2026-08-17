@@ -7,16 +7,20 @@ import com.estatehub.booking.model.Booking.BookingStatus;
 import java.util.List;
 
 public interface BookingService {
-    
+
     BookingResponse createBooking(BookingRequest request);
-    
+
     List<BookingResponse> getAllBookings();
-    
+
     BookingResponse getBookingById(Long id);
-    
+
     List<BookingResponse> getBookingsByCustomerId(Long customerId);
-    
+
+    List<BookingResponse> getBookingsByPropertyId(Long propertyId);
+
+    List<BookingResponse> getBookingsByStatus(BookingStatus status);
+
     BookingResponse updateBookingStatus(Long id, BookingStatus newStatus);
-    
+
     void deleteBooking(Long id);
 }
