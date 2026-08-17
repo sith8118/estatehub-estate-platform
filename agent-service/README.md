@@ -33,6 +33,17 @@ You can build and run the service via Docker using the provided `docker` Spring 
 docker build -t estatehub/agent-service .
 docker run -p 8083:8083 -e SPRING_PROFILES_ACTIVE=docker -e AGENT_API_KEY=your-secret-key estatehub/agent-service
 ```
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/v1/agents` | Register a new agent |
+| GET | `/api/v1/agents` | Retrieve all agents |
+| GET | `/api/v1/agents/{id}` | Retrieve an agent by ID |
+| PUT | `/api/v1/agents/{id}` | Update agent details |
+| DELETE | `/api/v1/agents/{id}` | Delete an agent |
+| POST | `/api/v1/agents/{id}/ratings` | Add a rating for an agent |
+| GET | `/api/v1/agents/{id}/ratings` | Retrieve agent ratings |
 
 ## Security Mechanism
 All service endpoints requiring authenticated CRUD operations (`/api/v1/**`) rely on the `X-API-KEY` header. 
