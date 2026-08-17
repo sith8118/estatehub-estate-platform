@@ -40,7 +40,11 @@ public class InquiryController {
         return new ResponseEntity<>(inquiryService.submitInquiry(request), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Get all inquiries", description = "Retrieves a list of all inquiries")
+    @Operation(
+    summary = "Get all inquiries",
+    description = "Retrieves a complete list of customer property inquiries"
+)
+@ApiResponse(responseCode = "200", description = "Inquiries retrieved successfully")
     @GetMapping
     public ResponseEntity<List<InquiryResponse>> getAllInquiries() {
         return ResponseEntity.ok(inquiryService.getAllInquiries());
@@ -57,7 +61,11 @@ public class InquiryController {
         return ResponseEntity.ok(inquiryService.getInquiryById(id));
     }
 
-    @Operation(summary = "Get property inquiries", description = "Get all inquiries made for a specific property")
+    @Operation(
+    summary = "Get property inquiries",
+    description = "Retrieves all inquiries associated with a specific property"
+)
+@ApiResponse(responseCode = "200", description = "Property inquiries retrieved successfully")
     @GetMapping("/property/{propertyId}")
     public ResponseEntity<List<InquiryResponse>> getInquiriesByPropertyId(@PathVariable Long propertyId) {
         return ResponseEntity.ok(inquiryService.getInquiriesByPropertyId(propertyId));
