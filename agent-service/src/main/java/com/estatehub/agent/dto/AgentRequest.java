@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,6 @@ public class AgentRequest {
     @NotNull(message = "Experience years is required")
     @PositiveOrZero(message = "Experience cannot be negative")
     private Integer experienceYears;
-
+@Size(max = 500, message = "Profile image URL cannot exceed 500 characters")
     private String profileImageUrl;
 }
