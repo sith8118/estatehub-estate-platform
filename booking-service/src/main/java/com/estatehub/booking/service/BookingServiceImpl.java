@@ -26,7 +26,7 @@ public class BookingServiceImpl implements BookingService {
                 .status(BookingStatus.PENDING)
                 .remarks(request.getRemarks())
                 .build();
-                
+
         Booking savedBooking = bookingRepository.save(booking);
         return mapToResponse(savedBooking);
     }
@@ -53,10 +53,24 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public List<BookingResponse> getBookingsByPropertyId(Long propertyId) {
+        return bookingRepository.findByPropertyId(propertyId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookingResponse> getBookingsByStatus(BookingStatus status) {
+        return bookingRepository.findByStatus(status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BookingResponse updateBookingStatus(Long id, BookingStatus newStatus) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
-                
+
         booking.setStatus(newStatus);
         Booking updatedBooking = bookingRepository.save(booking);
         return mapToResponse(updatedBooking);
