@@ -1,14 +1,6 @@
 package com.estatehub.booking.repository;
 
 import com.estatehub.booking.model.Booking;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-package com.estatehub.booking.repository;
-
-import com.estatehub.booking.model.Booking;
 import com.estatehub.booking.model.Booking.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
