@@ -60,7 +60,7 @@ public class PropertyController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<PropertyResponse> getPropertyById(@PathVariable Long id) {
+    public ResponseEntity<PropertyResponse> getPropertyById(@PathVariable String id) {
         return ResponseEntity.ok(propertyService.getPropertyById(id));
     }
 
@@ -71,7 +71,7 @@ public class PropertyController {
             @ApiResponse(responseCode = "404", description = "Property not found")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable Long id, @Valid @RequestBody PropertyRequest request) {
+    public ResponseEntity<PropertyResponse> updateProperty(@PathVariable String id, @Valid @RequestBody PropertyRequest request) {
         return ResponseEntity.ok(propertyService.updateProperty(id, request));
     }
 
@@ -81,7 +81,7 @@ public class PropertyController {
             @ApiResponse(responseCode = "404", description = "Property not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProperty(@PathVariable String id) {
         propertyService.deleteProperty(id);
         return ResponseEntity.noContent().build();
     }

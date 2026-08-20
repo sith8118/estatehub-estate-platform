@@ -1,203 +1,92 @@
-# estatehub-estate-platform
+# 🏢 EstateHub - Real Estate Microservices Platform
 
-A microservices-based real estate management system developed using Spring Boot.
+![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Team Members
+## 📌 Project Overview
+**EstateHub** is a comprehensive, distributed system for managing real estate properties, agents, bookings, and payments. It is built as a university group project for the **Service-Oriented Computing** module, demonstrating scalable, secure, and modern microservices architecture principles.
 
-- Member 1 – API Gateway and Authentication Service
-- Member 2 – Property Service
-- Member 3 – 
-- Member 4 – 
-- Member 5 – Payment and Notification Service
+---
 
-## Microservices
+## 🏗️ Architecture & Tech Stack
 
-- API Gateway
-- Auth Service
-- Property Service
-- Agent Service
-- Booking Service
-- Payment Service
+Our platform strictly adheres to a microservices architectural pattern, ensuring separation of concerns, scalability, and robust security.
 
-## How to Run the Application using Docker Compose
+- **Backend:** Spring Boot 3.x, Java 17, Spring Cloud Gateway, Spring Data JPA, Hibernate.
+- **Frontend:** React 18, Vite, Tailwind CSS.
+- **Database:** MySQL 8.0 (Containerized).
+- **Orchestration:** Docker & Docker Compose.
+- **Documentation:** Springdoc OpenAPI 3 (Swagger).
 
-You can boot up the entire microservices ecosystem, along with the MySQL database, using a single command:
+---
 
+## 👥 Team Members & Service Ownership
+
+This project was a collaborative effort by 5 team members. Each member took full ownership of a distinct domain service:
+
+- **Member 1 (Gateway & Auth Service):** Implemented Spring Cloud API Gateway on `port 8080`, handled OAuth2/JWT authentication, CORS configuration, and global routing.
+- **Member 2 (Property Service):** Developed the core property management system (`port 8082`) with advanced dynamic search filtering.
+- **Member 3 (Agent Service):** Created the agent profile and rating aggregation system (`port 8083`).
+- **Member 4 (Booking Service):** Implemented customer property visit reservations and inquiries logic (`port 8084`).
+- **Member 5 (Payment & Notification Service):** Built the transaction processor, PDF invoice generator, and notification simulator (`port 8085`).
+
+---
+
+## 🛡️ Security Implementation
+
+Security is a crucial component of our platform, enforcing a resilient **dual-layer security approach**:
+
+1. **Frontend to Gateway:** 
+   Client-facing authentication is secured via standard **JWT (JSON Web Tokens)**. Users receive a signed token upon login, which is strictly validated at the API Gateway layer.
+   
+2. **Inter-Service Security:** 
+   Every individual backend microservice enforces a strict **API-Key Security Policy**. A custom Servlet Filter is implemented inside each service to validate the `X-API-KEY` header against configured environment secrets (e.g., `estatehub-payment-secret-2026`). Unauthorized internal or external requests bypassing the Gateway are instantly rejected with standard `401 Unauthorized` or `403 Forbidden` JSON errors.
+
+---
+
+## 🚀 Getting Started (Docker Deployment)
+
+The entire microservices ecosystem is configured for seamless orchestration using Docker. 
+
+> **Prerequisite:** Ensure **Docker Desktop** is installed and actively running on your machine.
+
+Follow these steps to spin up the application:
+
+### Step 1: Clean previous states
+Remove any old persisting database volumes to ensure a fresh environment:
+```bash
+docker compose down -v
+```
+
+### Step 2: Spin up the Backend Services
+Build and start the MySQL DB, API Gateway, and all 5 microservices in detached mode:
 ```bash
 docker compose up --build -d
 ```
 
-This will construct and start all containers mapped to the `estatehub-network`.
-
-### Service Access & Documentation
-- **API Gateway**: `http://localhost:8080` (Routes all microservice traffic)
-- **Auth Service**: `http://localhost:8081`
-- **Property Service (Swagger UI)**: `http://localhost:8082/swagger-ui.html`
-- **Agent Service (Swagger UI)**: `http://localhost:8083/swagger-ui.html`
-- **Booking Service (Swagger UI)**: `http://localhost:8084/swagger-ui.html`
-- **Payment Service (Swagger UI)**: `http://localhost:8085/swagger-ui.html`
-
-## Member 1 – API Gateway and Authentication Service
-
-**Index Number:** ITBIN-2313-0049
-
-### Responsibilities
-
-- Developed the Authentication Microservice using Spring Boot.
-- Implemented user registration functionality.
-- Created the User entity and JPA repository.
-- Implemented the authentication service layer.
-- Created authentication REST API endpoints.
-- Added DTOs for authentication requests.
-- Integrated Spring Data JPA for database access.
-- Configured MySQL database connectivity.
-- Structured the service using Controller, Service, Repository, DTO, and Model layers.
-
-### Authentication API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/auth/register` | Register a new user |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- MySQL
-- Maven
-- Lombok
-
-### Project Structure
-
-```text
-auth-service/
-├── controller/
-│   └── AuthController.java
-├── dto/
-│   ├── LoginRequest.java
-│   └── RegisterRequest.java
-├── model/
-│   └── User.java
-├── repository/
-│   └── UserRepository.java
-└── service/
-    └── AuthService.java
+### Step 3: Run the Frontend UI
+Navigate to the frontend directory, install dependencies, and launch the Vite development server:
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-## Member 2 – Property Service
+---
 
-**Index Number:** [Your Index Number]
+## 📖 API Documentation
 
-### Responsibilities
+Each service generates real-time OpenAPI documentation. You can access the interactive Swagger UI directly for testing endpoints:
 
-- Developed the Property Microservice using Spring Boot.
-- Implemented real estate property management (CRUD).
-- Engineered advanced search filtering logic using Spring Data JPA.
-- Secured service endpoints via custom API Key authentication (`X-API-KEY`).
-- Configured multi-stage Dockerfile for containerized deployment.
-- Documented API endpoints via OpenAPI (Swagger).
-- Structured the service using Controller, Service, Repository, DTO, and Security layers.
+- **API Gateway:** `http://localhost:8080` *(Routes to all downstream services)*
+- **Auth Service:** [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+- **Property Service:** [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
+- **Agent Service:** [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
+- **Booking Service:** [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)
+- **Payment Service:** [http://localhost:8085/swagger-ui.html](http://localhost:8085/swagger-ui.html)
 
-### Property API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/properties` | Create a new property listing |
-| GET | `/api/v1/properties` | Retrieve all properties |
-| GET | `/api/v1/properties/{id}` | Retrieve property by ID |
-| PUT | `/api/v1/properties/{id}` | Update an existing property |
-| DELETE | `/api/v1/properties/{id}` | Delete a property |
-| GET | `/api/v1/properties/search` | Search properties by location, price, type, and bedrooms |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- MySQL / H2
-- OpenAPI/Swagger
-- Lombok
-- Docker
-
-### Project Structure
-
-```text
-property-service/
-├── config/
-│   ├── OpenApiConfig.java
-│   └── SecurityConfig.java
-├── controller/
-│   ├── GlobalExceptionHandler.java
-│   └── PropertyController.java
-├── dto/
-│   ├── ErrorResponse.java
-│   ├── PropertyRequest.java
-│   └── PropertyResponse.java
-├── model/
-│   └── Property.java
-├── repository/
-│   └── PropertyRepository.java
-├── security/
-│   ├── ApiKeyAuthFilter.java
-│   └── ApiKeyAuthenticationToken.java
-└── service/
-    ├── PropertyService.java
-    └── PropertyServiceImpl.java
-```
-
-## Member 5 – Payment and Notification Service
-
-**Index Number:** [Your Index Number]
-
-### Responsibilities
-
-- Developed the Payment Microservice using Spring Boot.
-- Implemented transactional payment processing.
-- Generated dynamic payment invoices using OpenPDF.
-- Implemented mock email and SMS notification dispatching.
-- Secured service endpoints via custom API Key authentication.
-- Configured multi-stage Dockerfile for containerized deployment.
-- Structured the service using Controller, Service, Repository, DTO, and Security layers.
-
-### Payment API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/payments/process` | Process a payment and generate invoice |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- MySQL / H2
-- OpenPDF
-- JavaMailSender
-- OpenAPI/Swagger
-- Lombok
-- Docker
-
-### Project Structure
-
-```text
-payment-service/
-├── controller/
-│   └── PaymentController.java
-├── dto/
-│   ├── PaymentRequest.java
-│   └── PaymentResponse.java
-├── model/
-│   └── PaymentTransaction.java
-├── repository/
-│   └── PaymentRepository.java
-├── security/
-│   └── ApiKeyAuthFilter.java
-└── service/
-    ├── PaymentService.java
-    └── NotificationService.java
-```
+---
+*Created with ❤️ by the EstateHub Team for the Service-Oriented Computing module.*
