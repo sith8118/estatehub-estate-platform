@@ -15,6 +15,8 @@ public class GatewaySecurityConfig {
         http
             .cors(org.springframework.security.config.Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .formLogin(formLogin -> formLogin.disable())
             .authorizeExchange(exchange -> exchange
                 .anyExchange().permitAll()
             );
