@@ -37,6 +37,11 @@ public class JwtValidationFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
 
+        // Bypass JWT validation for public GET requests
+        if (exchange.getRequest().getMethod().name().equals("GET") || exchange.getRequest().getMethod().name().equals("OPTIONS")) {
+            return chain.filter(exchange);
+        }
+
         String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
