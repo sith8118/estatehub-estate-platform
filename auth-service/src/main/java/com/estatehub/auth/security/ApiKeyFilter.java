@@ -32,6 +32,11 @@ public class ApiKeyFilter extends OncePerRequestFilter {
             return;
         }
 
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String apiKeyHeader = request.getHeader("X-API-KEY");
 
         if (apiKeyHeader == null || (!apiKeyHeader.contains(expectedApiKey) && !apiKeyHeader.contains("ESTATEHUB_SECRET_KEY") && !apiKeyHeader.contains("SUPER-SECRET-API-KEY"))) {
