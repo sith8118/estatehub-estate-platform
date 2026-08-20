@@ -17,31 +17,31 @@ spring:
             allowCredentials: true
       routes:
         - id: auth-service
-          uri: http://localhost:8081
+          uri: http://auth-service:8081
           predicates:
             - Path=/auth/**
           filters:
             - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
         - id: property-service
-          uri: http://localhost:8082
+          uri: http://property-service:8082
           predicates:
             - Path=/api/v1/properties/**
           filters:
             - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
         - id: agent-service
-          uri: http://localhost:8083
+          uri: http://agent-service:8083
           predicates:
             - Path=/api/v1/agents/**
           filters:
             - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
         - id: booking-service
-          uri: http://localhost:8084
+          uri: http://booking-service:8084
           predicates:
             - Path=/api/v1/bookings/**
           filters:
             - AddRequestHeader=X-API-KEY, ESTATEHUB_SECRET_KEY
         - id: payment-service
-          uri: http://localhost:8085
+          uri: http://payment-service:8085
           predicates:
             - Path=/api/v1/payments/**
           filters:
