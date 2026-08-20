@@ -26,8 +26,8 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Skip API Key validation for Swagger / OpenAPI endpoints
-        if (path.contains("/swagger-ui") || path.contains("/v3/api-docs") || path.contains("/api-docs")) {
+        // Skip API Key validation for Swagger / OpenAPI endpoints and Auth endpoints
+        if (path.contains("/swagger-ui") || path.contains("/v3/api-docs") || path.contains("/api-docs") || path.startsWith("/auth/")) {
             filterChain.doFilter(request, response);
             return;
         }
