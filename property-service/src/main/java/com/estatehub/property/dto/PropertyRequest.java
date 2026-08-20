@@ -52,5 +52,5 @@ public class PropertyRequest {
     private String imageUrl;
 
     @NotNull(message = "Agent ID is required")
-    private Long agentId;
+    private String agentId;
 }

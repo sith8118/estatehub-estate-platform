@@ -41,7 +41,7 @@ public class Property {
 
     private String imageUrl;
 
-    private Long agentId;
+    private String agentId;
     
     private LocalDateTime createdAt;
     

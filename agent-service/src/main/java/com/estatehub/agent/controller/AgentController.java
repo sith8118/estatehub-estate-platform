@@ -55,7 +55,7 @@ public class AgentController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<AgentResponse> getAgentById(@PathVariable Long id) {
+    public ResponseEntity<AgentResponse> getAgentById(@PathVariable String id) {
         return ResponseEntity.ok(agentService.getAgentById(id));
     }
 
@@ -66,14 +66,14 @@ public class AgentController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     @PutMapping("/{id}")
-    public ResponseEntity<AgentResponse> updateAgent(@PathVariable Long id, @Valid @RequestBody AgentRequest request) {
+    public ResponseEntity<AgentResponse> updateAgent(@PathVariable String id, @Valid @RequestBody AgentRequest request) {
         return ResponseEntity.ok(agentService.updateAgent(id, request));
     }
 
     @Operation(summary = "Delete an agent", description = "Deletes an agent profile")
     @ApiResponse(responseCode = "204", description = "Agent deleted successfully")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAgent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAgent(@PathVariable String id) {
         agentService.deleteAgent(id);
         return ResponseEntity.noContent().build();
     }
@@ -85,13 +85,13 @@ public class AgentController {
             @ApiResponse(responseCode = "404", description = "Agent not found")
     })
     @PostMapping("/{id}/ratings")
-    public ResponseEntity<AgentResponse> addRating(@PathVariable Long id, @Valid @RequestBody RatingRequest request) {
+    public ResponseEntity<AgentResponse> addRating(@PathVariable String id, @Valid @RequestBody RatingRequest request) {
         return ResponseEntity.ok(agentService.addRating(id, request));
     }
     
     @Operation(summary = "Get agent ratings", description = "Retrieves all ratings/reviews submitted for this agent")
     @GetMapping("/{id}/ratings")
-    public ResponseEntity<List<AgentRating>> getAgentRatings(@PathVariable Long id) {
+    public ResponseEntity<List<AgentRating>> getAgentRatings(@PathVariable String id) {
         return ResponseEntity.ok(agentService.getAgentRatings(id));
     }
 }

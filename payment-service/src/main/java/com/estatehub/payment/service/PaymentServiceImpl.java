@@ -72,7 +72,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment getPaymentById(Long id) {
+    public Payment getPaymentById(String id) {
         return paymentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found with ID: " + id));
     }
@@ -89,7 +89,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public byte[] generateInvoice(Long id) {
+    public byte[] generateInvoice(String id) {
         Payment payment = getPaymentById(id);
         return invoiceService.generateInvoicePdf(payment);
     }

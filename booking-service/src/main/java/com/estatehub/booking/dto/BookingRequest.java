@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class BookingRequest {
 
     @NotNull(message = "Property ID is required")
-    private Long propertyId;
+    private String propertyId;
 
     @NotNull(message = "Customer ID is required")
-    private Long customerId;
+    private String customerId;
 
     @NotNull(message = "Visit date is required")
     @Future(message = "Visit date must be in the future")

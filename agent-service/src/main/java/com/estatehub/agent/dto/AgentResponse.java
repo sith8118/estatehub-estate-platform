@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AgentResponse {
 
-    private Long id;
+    private String id;
     private String name;
     private String email;
     private String phone;

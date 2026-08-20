@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PaymentResponse {
 
     @Schema(description = "Internal Payment ID", example = "1")
-    private Long id;
+    private String id;
 
     @Schema(description = "Unique Transaction Identifier from Gateway", example = "tx_9d8ef921-2a9a...")
     private String transactionId;

@@ -13,13 +13,13 @@ public interface AgentService {
     
     List<AgentResponse> getAllAgents();
     
-    AgentResponse getAgentById(Long id);
+    AgentResponse getAgentById(String id);
     
-    AgentResponse updateAgent(Long id, AgentRequest request);
+    AgentResponse updateAgent(String id, AgentRequest request);
     
-    void deleteAgent(Long id);
+    void deleteAgent(String id);
     
-    AgentResponse addRating(Long agentId, RatingRequest request);
+    AgentResponse addRating(String agentId, RatingRequest request);
     
-    List<AgentRating> getAgentRatings(Long agentId);
+    List<AgentRating> getAgentRatings(String agentId);
 }

@@ -61,13 +61,13 @@ public class BookingController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
+    public ResponseEntity<BookingResponse> getBookingById(@PathVariable String id) {
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
 
     @Operation(summary = "Get customer bookings", description = "Get all bookings made by a specific customer")
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<BookingResponse>> getBookingsByCustomerId(@PathVariable Long customerId) {
+    public ResponseEntity<List<BookingResponse>> getBookingsByCustomerId(@PathVariable String customerId) {
         return ResponseEntity.ok(bookingService.getBookingsByCustomerId(customerId));
     }
 
@@ -79,14 +79,14 @@ public class BookingController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<BookingResponse> updateBookingStatus(
-            @PathVariable Long id, @RequestParam BookingStatus newStatus) {
+            @PathVariable String id, @RequestParam BookingStatus newStatus) {
         return ResponseEntity.ok(bookingService.updateBookingStatus(id, newStatus));
     }
 
     @Operation(summary = "Delete a booking", description = "Deletes and thoroughly removes a booking reservation")
     @ApiResponse(responseCode = "204", description = "Booking deleted successfully")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBooking(@PathVariable String id) {
         bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,7 +1,9 @@
 package com.estatehub.booking.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "inquiries")
+@Document(collection = "inquiries")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,30 +20,24 @@ import java.time.LocalDateTime;
 public class Inquiry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Schema(description = "Property ID related to the inquiry")
-    @Column(nullable = false)
-    private Long propertyId;
+    private String propertyId;
 
     @Schema(description = "Customer ID who submitted the inquiry")
-    @Column(nullable = false)
-    private Long customerId;
+    private String customerId;
 
     @Schema(description = "Customer inquiry message")
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String message;
 
     @Schema(description = "Indicates whether the inquiry has been responded to")
-    @Column(nullable = false)
     private boolean responded;
 
     @Schema(description = "Inquiry creation timestamp")
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
+    
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }

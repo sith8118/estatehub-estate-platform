@@ -37,14 +37,14 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
-    public InquiryResponse getInquiryById(Long id) {
+    public InquiryResponse getInquiryById(String id) {
         Inquiry inquiry = inquiryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inquiry not found with id: " + id));
         return mapToResponse(inquiry);
     }
 
     @Override
-    public List<InquiryResponse> getInquiriesByPropertyId(Long propertyId) {
+    public List<InquiryResponse> getInquiriesByPropertyId(String propertyId) {
         return inquiryRepository.findByPropertyId(propertyId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
