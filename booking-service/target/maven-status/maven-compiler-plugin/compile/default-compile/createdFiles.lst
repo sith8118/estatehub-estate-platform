@@ -27,3 +27,4 @@ com\estatehub\booking\controller\InquiryController.class
 com\estatehub\booking\dto\InquiryRequest$InquiryRequestBuilder.class
 com\estatehub\booking\service\BookingService.class
 com\estatehub\booking\model\Booking$BookingBuilder.class
+com\estatehub\booking\DataSeeder.class

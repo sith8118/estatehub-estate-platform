@@ -1,6 +1,7 @@
 com\estatehub\agent\dto\RatingRequest.class
 com\estatehub\agent\dto\AgentResponse$AgentResponseBuilder.class
 com\estatehub\agent\dto\AgentResponse.class
+com\estatehub\agent\DataSeeder.class
 com\estatehub\agent\service\AgentService.class
 com\estatehub\agent\config\OpenApiConfig.class
 com\estatehub\agent\dto\RatingRequest$RatingRequestBuilder.class
