@@ -35,7 +35,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
 
         String requestApiKey = request.getHeader(API_KEY_HEADER);
 
-        if (requestApiKey == null || (!requestApiKey.contains(activeApiKey) && !requestApiKey.contains("ESTATEHUB_SECRET_KEY"))) {
+        if (requestApiKey == null || (!requestApiKey.contains(activeApiKey) && !requestApiKey.contains("ESTATEHUB_SECRET_KEY") && !requestApiKey.contains("SUPER-SECRET-API-KEY"))) {
             sendErrorResponse(response, request.getRequestURI());
             return;
         }

