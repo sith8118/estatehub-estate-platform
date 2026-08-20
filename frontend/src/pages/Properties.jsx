@@ -11,7 +11,9 @@ export default function Properties() {
         const fetchProperties = async () => {
             try {
                 const response = await api.get('/api/v1/properties');
-                setProperties(response.data);
+                const data = response.data;
+                const propertyList = Array.isArray(data) ? data : data?.content || data?.data || [];
+                setProperties(propertyList);
             } catch (err) {
                 setError('Failed to load properties. Make sure the API is running.');
             } finally {
