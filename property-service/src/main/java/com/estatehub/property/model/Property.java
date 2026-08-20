@@ -1,6 +1,8 @@
 package com.estatehub.property.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +11,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "properties")
+@Document(collection = "properties")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,57 +19,40 @@ import java.time.LocalDateTime;
 public class Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false, length = 150)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false, length = 100)
     private String location;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private PropertyType propertyType;
 
-    @Column(nullable = false)
     private Integer bedrooms;
 
-    @Column(nullable = false)
     private Integer bathrooms;
 
-    @Column(nullable = false)
     private Double area;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private PropertyStatus status;
 
     private String imageUrl;
 
-    @Column(nullable = false)
     private Long agentId;
     
-    @Column(updatable = false)
     private LocalDateTime createdAt;
     
     private LocalDateTime updatedAt;
     
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
-    
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public enum PropertyType {

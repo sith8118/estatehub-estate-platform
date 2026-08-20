@@ -15,11 +15,11 @@ public interface PropertyService {
     
     Page<PropertyResponse> getAllProperties(Pageable pageable);
     
-    PropertyResponse getPropertyById(Long id);
+    PropertyResponse getPropertyById(String id);
     
-    PropertyResponse updateProperty(Long id, PropertyRequest request);
+    PropertyResponse updateProperty(String id, PropertyRequest request);
     
-    void deleteProperty(Long id);
+    void deleteProperty(String id);
     
     List<PropertyResponse> searchProperties(String location, BigDecimal minPrice, BigDecimal maxPrice, PropertyType propertyType, Integer bedrooms);
 }

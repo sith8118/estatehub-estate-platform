@@ -8,9 +8,13 @@ import com.estatehub.property.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class PropertyServiceImpl implements PropertyService {
 
     private final PropertyRepository propertyRepository;
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public PropertyResponse createProperty(PropertyRequest request) {
@@ -34,6 +39,8 @@ public class PropertyServiceImpl implements PropertyService {
                 .status(request.getStatus())
                 .imageUrl(request.getImageUrl())
                 .agentId(request.getAgentId())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
                 
         Property savedProperty = propertyRepository.save(property);
@@ -47,14 +54,14 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyResponse getPropertyById(Long id) {
+    public PropertyResponse getPropertyById(String id) {
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
         return mapToResponse(property);
     }
 
     @Override
-    public PropertyResponse updateProperty(Long id, PropertyRequest request) {
+    public PropertyResponse updateProperty(String id, PropertyRequest request) {
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
                 
@@ -69,13 +76,14 @@ public class PropertyServiceImpl implements PropertyService {
         property.setStatus(request.getStatus());
         property.setImageUrl(request.getImageUrl());
         property.setAgentId(request.getAgentId());
+        property.setUpdatedAt(LocalDateTime.now());
         
         Property updatedProperty = propertyRepository.save(property);
         return mapToResponse(updatedProperty);
     }
 
     @Override
-    public void deleteProperty(Long id) {
+    public void deleteProperty(String id) {
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with id: " + id));
         propertyRepository.delete(property);
@@ -83,7 +91,24 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<PropertyResponse> searchProperties(String location, BigDecimal minPrice, BigDecimal maxPrice, PropertyType propertyType, Integer bedrooms) {
-        List<Property> properties = propertyRepository.searchProperties(location, minPrice, maxPrice, propertyType, bedrooms);
+        Query query = new Query();
+        if (location != null && !location.isEmpty()) {
+            query.addCriteria(Criteria.where("location").regex(location, "i"));
+        }
+        if (minPrice != null) {
+            query.addCriteria(Criteria.where("price").gte(minPrice));
+        }
+        if (maxPrice != null) {
+            query.addCriteria(Criteria.where("price").lte(maxPrice));
+        }
+        if (propertyType != null) {
+            query.addCriteria(Criteria.where("propertyType").is(propertyType));
+        }
+        if (bedrooms != null) {
+            query.addCriteria(Criteria.where("bedrooms").gte(bedrooms));
+        }
+        
+        List<Property> properties = mongoTemplate.find(query, Property.class);
         return properties.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
     

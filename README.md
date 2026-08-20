@@ -1,203 +1,83 @@
-# estatehub-estate-platform
+# 🏡 EstateHub Platform
 
-A microservices-based real estate management system developed using Spring Boot.
+A modern, scalable real estate management system built with Spring Boot Microservices. EstateHub provides a comprehensive suite of services to manage properties, agents, bookings, and payments, all securely routed through an API Gateway.
 
-## Team Members
+---
 
-- Member 1 – API Gateway and Authentication Service
-- Member 2 – Property Service
-- Member 3 – 
-- Member 4 – 
-- Member 5 – Payment and Notification Service
+## 🏗️ Architecture
 
-## Microservices
+The platform follows a microservices architecture, exposing endpoints through a centralized API Gateway running on `http://localhost:8080`. The ecosystem consists of 5 distinct microservices:
 
-- API Gateway
-- Auth Service
-- Property Service
-- Agent Service
-- Booking Service
-- Payment Service
+| Microservice | Description | Database |
+| :--- | :--- | :--- |
+| **Auth Service** | Acts as the gatekeeper, handling user registration and JWT-based authentication. | MySQL |
+| **Property Service** | Core service managing real estate listings, details, and availability. | MongoDB |
+| **Agent Service** | Manages real estate agents, their profiles, and customer ratings. | MySQL |
+| **Booking Service** | Handles customer property visit reservations and deal-making. | MySQL |
+| **Payment Service** | Processes transactions and generates invoices for confirmed bookings. | MySQL |
 
-## How to Run the Application using Docker Compose
+---
 
-You can boot up the entire microservices ecosystem, along with the MySQL database, using a single command:
+## 🗄️ Polyglot Persistence (Viva Highlight)
 
-```bash
-docker compose up --build -d
-```
+To optimize data storage based on the distinct needs of each domain, EstateHub implements **Polyglot Persistence**:
 
-This will construct and start all containers mapped to the `estatehub-network`.
+- 🐘 **MySQL (Relational):** Used by Auth, Agent, Booking, and Payment services. It ensures strict ACID compliance, data integrity, and complex transactional relationships necessary for user accounts and financial records.
+- 🍃 **MongoDB (NoSQL):** Specifically chosen for the **Property Service**. It handles flexible, document-based real estate data, allowing for dynamic property attributes without rigid schema constraints.
 
-### Service Access & Documentation
-- **API Gateway**: `http://localhost:8080` (Routes all microservice traffic)
-- **Auth Service**: `http://localhost:8081`
-- **Property Service (Swagger UI)**: `http://localhost:8082/swagger-ui.html`
-- **Agent Service (Swagger UI)**: `http://localhost:8083/swagger-ui.html`
-- **Booking Service (Swagger UI)**: `http://localhost:8084/swagger-ui.html`
-- **Payment Service (Swagger UI)**: `http://localhost:8085/swagger-ui.html`
+---
 
-## Member 1 – API Gateway and Authentication Service
+## 🛠️ Prerequisites
 
-**Index Number:** ITBIN-2313-0049
+To run and interact with the platform locally, ensure you have the following installed:
+- 🐳 **Docker Desktop**
+- 🚀 **Postman** (For API Testing)
+- 🍃 **MongoDB Compass** (Optional: For inspecting the Property Database)
+- 🐬 **MySQL Workbench** (Optional: For inspecting Relational Databases)
 
-### Responsibilities
+---
 
-- Developed the Authentication Microservice using Spring Boot.
-- Implemented user registration functionality.
-- Created the User entity and JPA repository.
-- Implemented the authentication service layer.
-- Created authentication REST API endpoints.
-- Added DTOs for authentication requests.
-- Integrated Spring Data JPA for database access.
-- Configured MySQL database connectivity.
-- Structured the service using Controller, Service, Repository, DTO, and Model layers.
+## 🚀 How to Run
 
-### Authentication API
+1. Clean up any existing containers and volumes:
+   ```bash
+   docker compose down -v
+   ```
+2. Pull the latest changes:
+   ```bash
+   git pull
+   ```
+3. Build and spin up the entire microservices ecosystem:
+   ```bash
+   docker compose up --build
+   ```
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/auth/register` | Register a new user |
+The **API Gateway** will be available at `http://localhost:8080`.
 
-### Technologies Used
+---
 
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- MySQL
-- Maven
-- Lombok
+## 🎓 Viva Demonstration Flow (The 5-Step Process)
 
-### Project Structure
+To successfully demonstrate the platform during the Viva, follow this logical workflow:
 
-```text
-auth-service/
-├── controller/
-│   └── AuthController.java
-├── dto/
-│   ├── LoginRequest.java
-│   └── RegisterRequest.java
-├── model/
-│   └── User.java
-├── repository/
-│   └── UserRepository.java
-└── service/
-    └── AuthService.java
-```
+1. 🔐 **Step 1: Auth (Gatekeeper)**
+   - Register a new user and Login to generate a secure **JWT Token**.
+2. 🏡 **Step 2: Property (Core)**
+   - Use the generated JWT to Create a new property listing (Data is saved flexibly in **MongoDB**).
+3. 👔 **Step 3: Agent (Manager)**
+   - Add a managing agent profile for the property (Saved in **MySQL**).
+4. 📅 **Step 4: Booking (Deal Maker)**
+   - Create a property visit booking for a customer (Saved in **MySQL**).
+5. 💳 **Step 5: Payment (Closer)**
+   - Process the payment for the confirmed booking (Saved in **MySQL**).
 
-## Member 2 – Property Service
+---
 
-**Index Number:** [Your Index Number]
+## 📬 Postman Collection
 
-### Responsibilities
+For a seamless, one-click testing experience during the Viva, a complete Postman Collection is provided in the repository:
 
-- Developed the Property Microservice using Spring Boot.
-- Implemented real estate property management (CRUD).
-- Engineered advanced search filtering logic using Spring Data JPA.
-- Secured service endpoints via custom API Key authentication (`X-API-KEY`).
-- Configured multi-stage Dockerfile for containerized deployment.
-- Documented API endpoints via OpenAPI (Swagger).
-- Structured the service using Controller, Service, Repository, DTO, and Security layers.
+- 📄 **File:** `EstateHub_Viva_Postman_Collection.json`
+- **Features:** It includes all endpoints mapped to the API Gateway (`http://localhost:8080`), sample JSON payloads, automatic JWT extraction via test scripts, and pre-configured `X-API-KEY` security headers.
 
-### Property API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/properties` | Create a new property listing |
-| GET | `/api/v1/properties` | Retrieve all properties |
-| GET | `/api/v1/properties/{id}` | Retrieve property by ID |
-| PUT | `/api/v1/properties/{id}` | Update an existing property |
-| DELETE | `/api/v1/properties/{id}` | Delete a property |
-| GET | `/api/v1/properties/search` | Search properties by location, price, type, and bedrooms |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- MySQL / H2
-- OpenAPI/Swagger
-- Lombok
-- Docker
-
-### Project Structure
-
-```text
-property-service/
-├── config/
-│   ├── OpenApiConfig.java
-│   └── SecurityConfig.java
-├── controller/
-│   ├── GlobalExceptionHandler.java
-│   └── PropertyController.java
-├── dto/
-│   ├── ErrorResponse.java
-│   ├── PropertyRequest.java
-│   └── PropertyResponse.java
-├── model/
-│   └── Property.java
-├── repository/
-│   └── PropertyRepository.java
-├── security/
-│   ├── ApiKeyAuthFilter.java
-│   └── ApiKeyAuthenticationToken.java
-└── service/
-    ├── PropertyService.java
-    └── PropertyServiceImpl.java
-```
-
-## Member 5 – Payment and Notification Service
-
-**Index Number:** [Your Index Number]
-
-### Responsibilities
-
-- Developed the Payment Microservice using Spring Boot.
-- Implemented transactional payment processing.
-- Generated dynamic payment invoices using OpenPDF.
-- Implemented mock email and SMS notification dispatching.
-- Secured service endpoints via custom API Key authentication.
-- Configured multi-stage Dockerfile for containerized deployment.
-- Structured the service using Controller, Service, Repository, DTO, and Security layers.
-
-### Payment API
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/payments/process` | Process a payment and generate invoice |
-
-### Technologies Used
-
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- MySQL / H2
-- OpenPDF
-- JavaMailSender
-- OpenAPI/Swagger
-- Lombok
-- Docker
-
-### Project Structure
-
-```text
-payment-service/
-├── controller/
-│   └── PaymentController.java
-├── dto/
-│   ├── PaymentRequest.java
-│   └── PaymentResponse.java
-├── model/
-│   └── PaymentTransaction.java
-├── repository/
-│   └── PaymentRepository.java
-├── security/
-│   └── ApiKeyAuthFilter.java
-└── service/
-    ├── PaymentService.java
-    └── NotificationService.java
-```
+Import this file into Postman and execute the **5-Step Process** effortlessly!
