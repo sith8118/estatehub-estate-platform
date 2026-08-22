@@ -46,6 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .paymentMethod(request.getPaymentMethod())
                 .paymentStatus(status)
                 .transactionId(transactionId)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         payment = paymentRepository.save(payment);

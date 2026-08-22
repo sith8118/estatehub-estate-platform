@@ -8,6 +8,7 @@ import com.estatehub.booking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,8 @@ public class BookingServiceImpl implements BookingService {
                 .visitDate(request.getVisitDate())
                 .status(BookingStatus.PENDING)
                 .remarks(request.getRemarks())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         Booking savedBooking = bookingRepository.save(booking);

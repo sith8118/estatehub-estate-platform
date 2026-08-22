@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +38,8 @@ public class AgentServiceImpl implements AgentService {
                 .licenseNumber(request.getLicenseNumber())
                 .experienceYears(request.getExperienceYears())
                 .profileImageUrl(request.getProfileImageUrl())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
                 
         Agent savedAgent = agentRepository.save(agent);

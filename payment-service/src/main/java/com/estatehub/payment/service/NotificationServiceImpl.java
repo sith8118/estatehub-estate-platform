@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .subject(request.getSubject())
                 .message(request.getMessage())
                 .status(NotificationStatus.PENDING) // Temporary state before save
+                .createdAt(LocalDateTime.now())
                 .build();
 
         try {
@@ -66,6 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .subject(request.getSubject())
                 .message(request.getMessage())
                 .status(success ? NotificationStatus.SENT : NotificationStatus.FAILED)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         notificationLogRepository.save(notificationLog);
