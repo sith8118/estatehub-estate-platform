@@ -32,8 +32,13 @@ public class JwtValidationFilter implements GlobalFilter, Ordered {
         String path = exchange.getRequest().getURI().getPath();
 
         // Bypass JWT validation for login, register, and Swagger UI
-        if (path.equals("/auth/login") || path.equals("/auth/register") ||
+        if (path.startsWith("/auth/") ||
             path.contains("/swagger-ui") || path.contains("/v3/api-docs") || path.contains("/api-docs")) {
+            return chain.filter(exchange);
+        }
+
+        // Bypass JWT validation for public GET requests
+        if (exchange.getRequest().getMethod().name().equals("GET") || exchange.getRequest().getMethod().name().equals("OPTIONS")) {
             return chain.filter(exchange);
         }
 

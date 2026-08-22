@@ -4,7 +4,7 @@ import api from '../api/axiosConfig';
 import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const { login } = useContext(AuthContext);
@@ -13,7 +13,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/auth/login', { username, password });
+            const response = await api.post('/auth/login', { email, password });
             if (response.data && response.data.token) {
                 login(response.data.token);
                 navigate('/');
@@ -43,16 +43,16 @@ export default function Login() {
                     {error && <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">{error}</div>}
                     <div className="rounded-md shadow-sm space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="username">Username</label>
+                            <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="email">Email</label>
                             <input
-                                id="username"
-                                name="username"
-                                type="text"
+                                id="email"
+                                name="email"
+                                type="email"
                                 required
                                 className="input-field"
-                                placeholder="Username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div>

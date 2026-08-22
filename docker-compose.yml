@@ -1,24 +1,6 @@
 version: '3.8'
 
 services:
-  mysql-db:
-    image: mysql:8.0
-    container_name: estatehub-mysql
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: estatehub_db
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - estatehub-network
 
   mongodb:
     image: mongo:latest
@@ -26,6 +8,17 @@ services:
     restart: always
     ports:
       - "27018:27017"
+    networks:
+      - estatehub-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: estatehub-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
     networks:
       - estatehub-network
 
@@ -54,10 +47,8 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - DB_HOST=mysql-db
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mongodb
     networks:
       - estatehub-network
 
@@ -82,10 +73,8 @@ services:
       - "8083:8083"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - DB_HOST=mysql-db
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mongodb
     networks:
       - estatehub-network
 
@@ -97,10 +86,8 @@ services:
       - "8084:8084"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - DB_HOST=mysql-db
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mongodb
     networks:
       - estatehub-network
 
@@ -112,10 +99,8 @@ services:
       - "8085:8085"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - DB_HOST=mysql-db
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mongodb
     networks:
       - estatehub-network
 
@@ -123,5 +108,3 @@ networks:
   estatehub-network:
     driver: bridge
 
-volumes:
-  mysql_data:

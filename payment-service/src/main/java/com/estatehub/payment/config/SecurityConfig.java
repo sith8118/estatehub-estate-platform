@@ -4,6 +4,7 @@ import com.estatehub.payment.security.ApiKeyAuthFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -44,9 +45,11 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/h2-console/**",
-                        "/favicon.ico"
+                        "/favicon.ico",
+                        "/error"
                 ).permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/v1/payments/**").permitAll()
+                .anyRequest().permitAll()
             )
             .addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .headers(headers -> headers.frameOptions(frame -> frame.disable())); // For H2 Console

@@ -27,7 +27,7 @@ public class PropertyResponse {
     private Double area;
     private PropertyStatus status;
     private String imageUrl;
-    private Long agentId;
+    private String agentId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

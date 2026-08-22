@@ -1,12 +1,12 @@
 package com.estatehub.payment.repository;
 
 import com.estatehub.payment.model.Payment;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends MongoRepository<Payment, String> {
     Optional<Payment> findByBookingId(String bookingId);
 }

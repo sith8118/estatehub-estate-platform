@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +38,8 @@ public class AgentServiceImpl implements AgentService {
                 .licenseNumber(request.getLicenseNumber())
                 .experienceYears(request.getExperienceYears())
                 .profileImageUrl(request.getProfileImageUrl())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
                 
         Agent savedAgent = agentRepository.save(agent);
@@ -51,14 +54,14 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public AgentResponse getAgentById(Long id) {
+    public AgentResponse getAgentById(String id) {
         Agent agent = agentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Agent not found with id: " + id));
         return mapToResponse(agent);
     }
 
     @Override
-    public AgentResponse updateAgent(Long id, AgentRequest request) {
+    public AgentResponse updateAgent(String id, AgentRequest request) {
         Agent agent = agentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Agent not found with id: " + id));
                 
@@ -72,7 +75,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public void deleteAgent(Long id) {
+    public void deleteAgent(String id) {
         Agent agent = agentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Agent not found with id: " + id));
         agentRepository.delete(agent);
@@ -80,7 +83,7 @@ public class AgentServiceImpl implements AgentService {
 
     @Override
     @Transactional
-    public AgentResponse addRating(Long agentId, RatingRequest request) {
+    public AgentResponse addRating(String agentId, RatingRequest request) {
         Agent agent = agentRepository.findById(agentId)
                 .orElseThrow(() -> new RuntimeException("Agent not found with id: " + agentId));
                 
@@ -107,7 +110,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public List<AgentRating> getAgentRatings(Long agentId) {
+    public List<AgentRating> getAgentRatings(String agentId) {
         if (!agentRepository.existsById(agentId)) {
              throw new RuntimeException("Agent not found with id: " + agentId);
         }

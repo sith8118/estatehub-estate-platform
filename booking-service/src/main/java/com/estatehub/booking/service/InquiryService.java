@@ -11,7 +11,7 @@ public interface InquiryService {
     
     List<InquiryResponse> getAllInquiries();
     
-    InquiryResponse getInquiryById(Long id);
+    InquiryResponse getInquiryById(String id);
     
-    List<InquiryResponse> getInquiriesByPropertyId(Long propertyId);
+    List<InquiryResponse> getInquiriesByPropertyId(String propertyId);
 }

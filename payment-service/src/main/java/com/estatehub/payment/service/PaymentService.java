@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface PaymentService {
     PaymentResponse processPayment(PaymentRequest request);
-    Payment getPaymentById(Long id);
+    Payment getPaymentById(String id);
     Payment getPaymentByBookingId(String bookingId);
     Page<Payment> getPaymentHistory(Pageable pageable);
-    byte[] generateInvoice(Long id);
+    byte[] generateInvoice(String id);
 }

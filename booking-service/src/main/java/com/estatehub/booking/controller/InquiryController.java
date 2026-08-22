@@ -57,7 +57,7 @@ public class InquiryController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     @GetMapping("/{id}")
-    public ResponseEntity<InquiryResponse> getInquiryById(@PathVariable Long id) {
+    public ResponseEntity<InquiryResponse> getInquiryById(@PathVariable String id) {
         return ResponseEntity.ok(inquiryService.getInquiryById(id));
     }
 
@@ -67,7 +67,7 @@ public class InquiryController {
 )
 @ApiResponse(responseCode = "200", description = "Property inquiries retrieved successfully")
     @GetMapping("/property/{propertyId}")
-    public ResponseEntity<List<InquiryResponse>> getInquiriesByPropertyId(@PathVariable Long propertyId) {
+    public ResponseEntity<List<InquiryResponse>> getInquiriesByPropertyId(@PathVariable String propertyId) {
         return ResponseEntity.ok(inquiryService.getInquiriesByPropertyId(propertyId));
     }
 }

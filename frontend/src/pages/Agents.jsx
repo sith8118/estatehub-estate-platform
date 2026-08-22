@@ -10,7 +10,9 @@ export default function Agents() {
         const fetchAgents = async () => {
             try {
                 const response = await api.get('/api/v1/agents');
-                setAgents(response.data);
+                const data = response.data;
+                const agentList = Array.isArray(data) ? data : data?.content || data?.data || [];
+                setAgents(agentList);
             } catch (err) {
                 setError('Failed to load agents.');
             } finally {

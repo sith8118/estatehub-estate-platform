@@ -35,7 +35,7 @@ public class PaymentController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get payment by ID", description = "Retrieves an existing payment by its internal database ID.")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable Long id) {
+    public ResponseEntity<Payment> getPaymentById(@PathVariable String id) {
         return ResponseEntity.ok(paymentService.getPaymentById(id));
     }
 
@@ -53,7 +53,7 @@ public class PaymentController {
 
     @GetMapping(value = "/{id}/invoice", produces = MediaType.APPLICATION_PDF_VALUE)
     @Operation(summary = "Download Invoice PDF", description = "Generates and returns a downloadable PDF invoice for a given payment ID.")
-    public ResponseEntity<byte[]> getPaymentInvoice(@PathVariable Long id) {
+    public ResponseEntity<byte[]> getPaymentInvoice(@PathVariable String id) {
         byte[] pdfBytes = paymentService.generateInvoice(id);
 
         HttpHeaders headers = new HttpHeaders();

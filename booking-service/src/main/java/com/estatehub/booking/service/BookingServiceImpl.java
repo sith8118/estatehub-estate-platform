@@ -8,6 +8,7 @@ import com.estatehub.booking.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,8 @@ public class BookingServiceImpl implements BookingService {
                 .visitDate(request.getVisitDate())
                 .status(BookingStatus.PENDING)
                 .remarks(request.getRemarks())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         Booking savedBooking = bookingRepository.save(booking);
@@ -39,21 +42,21 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponse getBookingById(Long id) {
+    public BookingResponse getBookingById(String id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         return mapToResponse(booking);
     }
 
     @Override
-    public List<BookingResponse> getBookingsByCustomerId(Long customerId) {
+    public List<BookingResponse> getBookingsByCustomerId(String customerId) {
         return bookingRepository.findByCustomerId(customerId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<BookingResponse> getBookingsByPropertyId(Long propertyId) {
+    public List<BookingResponse> getBookingsByPropertyId(String propertyId) {
         return bookingRepository.findByPropertyId(propertyId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -67,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponse updateBookingStatus(Long id, BookingStatus newStatus) {
+    public BookingResponse updateBookingStatus(String id, BookingStatus newStatus) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
 
@@ -77,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void deleteBooking(Long id) {
+    public void deleteBooking(String id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         bookingRepository.delete(booking);

@@ -1,6 +1,8 @@
 package com.estatehub.payment.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,8 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "notification_logs")
+@Document(collection = "notification_logs")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,30 +18,21 @@ import java.time.LocalDateTime;
 public class NotificationLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
     private String recipient;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private NotificationType type;
 
-    @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String message;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private NotificationStatus status;
 
-    @Column(updatable = false)
     private LocalDateTime sentAt;
 
-    @PrePersist
+    
     protected void onCreate() {
         this.sentAt = LocalDateTime.now();
     }

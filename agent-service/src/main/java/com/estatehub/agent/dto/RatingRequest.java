@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class RatingRequest {
 
     @NotNull(message = "Customer ID is required")
-    private Long customerId;
+    private String customerId;
 
     @NotNull(message = "Score is required")
     @Min(value = 1, message = "Score must be between 1 and 5")

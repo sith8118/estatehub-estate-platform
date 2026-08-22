@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class InquiryResponse {
 
-    private Long id;
-    private Long propertyId;
-    private Long customerId;
+    private String id;
+    private String propertyId;
+    private String customerId;
     private String message;
     private boolean responded;
     private LocalDateTime createdAt;

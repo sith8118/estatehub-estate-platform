@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class InquiryRequest {
 
     @NotNull(message = "Property ID is required")
-    private Long propertyId;
+    private String propertyId;
 
     @NotNull(message = "Customer ID is required")
-    private Long customerId;
+    private String customerId;
 
     @NotBlank(message = "Message and details cannot be blank")
     private String message;

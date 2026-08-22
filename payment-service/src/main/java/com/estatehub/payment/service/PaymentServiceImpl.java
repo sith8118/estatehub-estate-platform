@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .paymentMethod(request.getPaymentMethod())
                 .paymentStatus(status)
                 .transactionId(transactionId)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         payment = paymentRepository.save(payment);
@@ -72,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment getPaymentById(Long id) {
+    public Payment getPaymentById(String id) {
         return paymentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found with ID: " + id));
     }
@@ -89,7 +91,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public byte[] generateInvoice(Long id) {
+    public byte[] generateInvoice(String id) {
         Payment payment = getPaymentById(id);
         return invoiceService.generateInvoicePdf(payment);
     }

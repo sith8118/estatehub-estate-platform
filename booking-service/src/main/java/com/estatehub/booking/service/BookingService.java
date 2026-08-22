@@ -12,15 +12,15 @@ public interface BookingService {
 
     List<BookingResponse> getAllBookings();
 
-    BookingResponse getBookingById(Long id);
+    BookingResponse getBookingById(String id);
 
-    List<BookingResponse> getBookingsByCustomerId(Long customerId);
+    List<BookingResponse> getBookingsByCustomerId(String customerId);
 
-    List<BookingResponse> getBookingsByPropertyId(Long propertyId);
+    List<BookingResponse> getBookingsByPropertyId(String propertyId);
 
     List<BookingResponse> getBookingsByStatus(BookingStatus status);
 
-    BookingResponse updateBookingStatus(Long id, BookingStatus newStatus);
+    BookingResponse updateBookingStatus(String id, BookingStatus newStatus);
 
-    void deleteBooking(Long id);
+    void deleteBooking(String id);
 }
