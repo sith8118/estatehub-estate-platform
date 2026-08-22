@@ -45,10 +45,11 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/h2-console/**",
-                        "/favicon.ico"
+                        "/favicon.ico",
+                        "/error"
                 ).permitAll()
-                .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/v1/payments/**").permitAll()
+                .anyRequest().permitAll()
             )
             .addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .headers(headers -> headers.frameOptions(frame -> frame.disable())); // For H2 Console
