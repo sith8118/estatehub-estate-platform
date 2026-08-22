@@ -26,7 +26,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @PostMapping
+    @PostMapping("/process")
     @Operation(summary = "Process a new payment", description = "Simulates payment processing and returns success status with transaction ID.")
     public ResponseEntity<PaymentResponse> processPayment(@Valid @RequestBody PaymentRequest request) {
         PaymentResponse response = paymentService.processPayment(request);
