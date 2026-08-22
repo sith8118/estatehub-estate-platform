@@ -32,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .subject(request.getSubject())
                 .message(request.getMessage())
                 .status(NotificationStatus.PENDING) // Temporary state before save
-                .createdAt(LocalDateTime.now())
+                .sentAt(LocalDateTime.now())
                 .build();
 
         try {
@@ -68,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .subject(request.getSubject())
                 .message(request.getMessage())
                 .status(success ? NotificationStatus.SENT : NotificationStatus.FAILED)
-                .createdAt(LocalDateTime.now())
+                .sentAt(LocalDateTime.now())
                 .build();
 
         notificationLogRepository.save(notificationLog);
