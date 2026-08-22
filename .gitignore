@@ -1,0 +1,11 @@
+# Node
+node_modules/
+**/node_modules/
+
+# Java / Maven (Spring Boot)
+target/
+**/target/
+*.class
+
+# Environment
+.env
