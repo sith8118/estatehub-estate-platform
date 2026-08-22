@@ -9,7 +9,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component\npublic class ApiKeyFilter extends OncePerRequestFilter {
+@Component
+public class ApiKeyFilter extends OncePerRequestFilter {
 
     private final String expectedApiKey = "viva-super-secret-key";
 
